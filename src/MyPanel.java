@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class MyPanel extends JPanel implements ActionListener {
     private JTextArea jText;
-    private JTextField jSource;
+    private JTextField jWord;
     private JButton jXoa;
     private JButton jTraCuu;
     private JTextField jTuNgay;
@@ -23,13 +23,15 @@ public class MyPanel extends JPanel implements ActionListener {
     public MyPanel() {
         //construct components
         jText = new JTextArea (5, 5);
-        jSource = new JTextField (5);
+        jWord = new JTextField (5);
         jXoa = new JButton ("Xoa");
+        jXoa.addActionListener(this);
         jTraCuu = new JButton ("Tra cứu");
         jTraCuu.addActionListener(this);
         jTuNgay = new JTextField (5);
         jDenNgay = new JTextField (5);
         jThem = new JButton ("Them vao");
+        jThem.addActionListener(this);
         jText2 = new JTextArea (5, 5);
         jToggle = new JToggleButton ("Anh->Vie", false);
         jToggle.addActionListener(this);
@@ -48,7 +50,7 @@ public class MyPanel extends JPanel implements ActionListener {
         //add components
         add (scrollPane1);
         add (scrollPane2);
-        add (jSource);
+        add (jWord);
         add (jXoa);
         add (jTraCuu);
         add (jTuNgay);
@@ -60,7 +62,7 @@ public class MyPanel extends JPanel implements ActionListener {
 
         //set component bounds (only needed by Absolute Positioning)
         scrollPane1.setBounds (25, 90, 210, 200);
-        jSource.setBounds (25, 30, 210, 30);
+        jWord.setBounds (25, 30, 210, 30);
         jXoa.setBounds (265, 165, 100, 25);
         jTraCuu.setBounds (265, 75, 100, 25);
         jTuNgay.setBounds (390, 35, 115, 25);
@@ -71,8 +73,8 @@ public class MyPanel extends JPanel implements ActionListener {
         jYeuThich.setBounds (265, 215, 100, 25);
         jThongKe.setBounds (545, 50, 100, 25);
 
-        Anh_Viet = new Dict("XML/Anh_Viet.xml");
-        Viet_Anh = new Dict("XML/Viet_Anh.xml");
+        Anh_Viet = new Dict("Anh_Viet");
+        Viet_Anh = new Dict("Viet_Anh");
         pointer=Anh_Viet;
     }
 
@@ -91,7 +93,7 @@ public class MyPanel extends JPanel implements ActionListener {
         if (e.getSource()== jTraCuu)
         {
             System.out.println("tra cuu");
-            String source= jSource.getText();
+            String source= jWord.getText();
             jText.setText(pointer.Translate(source));
         }
         if (e.getSource()==jThongKe)
@@ -120,6 +122,17 @@ public class MyPanel extends JPanel implements ActionListener {
             }
 
             System.out.println("Action - selected=" + selected + "\n");
+        }
+        if (e.getSource()==jXoa)
+        {
+            String word= jWord.getText();
+            pointer.Delete(word);
+        }
+        if (e.getSource()==jThem)
+        {
+            String word = jWord.getText();
+            String meaning= jText.getText();
+            pointer.Add(word,meaning);
         }
     }
 }
