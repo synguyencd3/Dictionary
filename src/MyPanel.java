@@ -121,7 +121,6 @@ public class MyPanel extends JPanel implements ActionListener {
                 System.out.println("Anh->Vie");
             }
 
-            System.out.println("Action - selected=" + selected + "\n");
         }
         if (e.getSource()==jXoa)
         {
